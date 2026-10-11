@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markitdown-mdzip"
+description = "MarkItDown plugin that converts MDZip (.mdz) archives to Markdown."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = ["markitdown>=0.1.0", "mdzip-core>=0.1.0"]
+dynamic = ["version"]
+keywords = ["markitdown", "markitdown-plugin", "mdzip", "mdz", "markdown"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Text Processing :: Markup :: Markdown",
+]
+
+[project.urls]
+Homepage = "https://mdzip.org"
+Specification = "https://github.com/mdzip-project/mdzip-spec"
+Source = "https://github.com/mdzip-project/mdzip-markitdown"
+
+[project.optional-dependencies]
+# MarkItDown's own format extras, for markitdown-mdz (e.g. pip install "markitdown-mdzip[docx]").
+docx = ["markitdown[docx]"]
+pptx = ["markitdown[pptx]"]
+pdf = ["markitdown[pdf]"]
+all = ["markitdown[all]"]
+
+[project.scripts]
+markitdown-mdz = "markitdown_mdzip.__main__:main"
+
+# MarkItDown discovers plugins through this entry point group.
+[project.entry-points."markitdown.plugin"]
+mdzip = "markitdown_mdzip"
+
+[tool.setuptools.dynamic]
+version = { attr = "markitdown_mdzip._version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
