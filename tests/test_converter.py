@@ -9,7 +9,7 @@ import tempfile
 import unittest
 import zipfile
 
-import mdzip
+import mdzip_core
 from markitdown import MarkItDown, StreamInfo
 
 from markitdown_mdzip import MdzConverter
@@ -26,7 +26,7 @@ def convert(data: bytes, extension: str = ".mdz", **kwargs):
 
 class DocumentModeTests(unittest.TestCase):
     def setUp(self):
-        self.data = mdzip.create(
+        self.data = mdzip_core.create(
             {
                 "index.md": "# Field Guide\n\nSee ![a bird](images/bird.png \"Bird\").\n",
                 "notes.md": "# Notes\n\nNot the entry point.\n",
@@ -78,7 +78,7 @@ class DocumentModeTests(unittest.TestCase):
 
 class ProjectModeTests(unittest.TestCase):
     def setUp(self):
-        self.data = mdzip.create(
+        self.data = mdzip_core.create(
             {
                 "index.md": "# Handbook\n\n[Setup](guide/setup.md)\n",
                 "guide/setup.md": "# Setup\n\n![diagram](../images/d.png)\n",
@@ -124,7 +124,7 @@ class EntryPointTests(unittest.TestCase):
 
     def test_ambiguous_entry_point_is_not_guessed(self):
         data = self.raw({"a.md": "# A\n", "b.md": "# B\n"})
-        with self.assertRaises(mdzip.MdzError) as caught:
+        with self.assertRaises(mdzip_core.MdzError) as caught:
             MdzConverter().convert(io.BytesIO(data), StreamInfo(extension=".mdz"))
         self.assertEqual(caught.exception.code, "ERR_ENTRYPOINT_UNRESOLVED")
 

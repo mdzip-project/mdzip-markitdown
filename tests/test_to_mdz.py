@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 
-import mdzip
+import mdzip_core
 from markitdown import StreamInfo
 
 from markitdown_mdzip import convert_to_mdz
@@ -56,7 +56,7 @@ class HtmlTests(unittest.TestCase):
         self.assertIn("![photo](images/image-002.png)", result.markdown)
         self.assertIn("![map again](images/image-001.png)", result.markdown)  # stored once
 
-        with mdzip.open(result.data) as archive:
+        with mdzip_core.open(result.data) as archive:
             self.assertEqual(archive.entry_point, "trip.md")
             self.assertEqual(archive.title, "Trip Report")
             self.assertEqual(archive.read_bytes("images/image-001.png"), PNG)
@@ -101,7 +101,7 @@ class DocxTests(unittest.TestCase):
         self.assertIn("# Quarterly Report", result.markdown)
         self.assertEqual(result.title, "Quarterly Report")  # Word has no title; the heading is used
         self.assertEqual(result.images, ["images/image-001.png"])
-        with mdzip.open(result.data) as archive:
+        with mdzip_core.open(result.data) as archive:
             self.assertEqual(archive.read_bytes("images/image-001.png"), PNG)
 
 
@@ -145,7 +145,7 @@ class CommandTests(unittest.TestCase):
             code, out, _ = self.run_main(source, "-o", output)
             self.assertEqual(code, 0)
             self.assertIn("trip.md + 2 images", out)
-            with mdzip.open(output) as archive:
+            with mdzip_core.open(output) as archive:
                 self.assertEqual(archive.entry_point, "trip.md")
 
             code, _, err = self.run_main(source, "-o", output)

@@ -7,7 +7,7 @@ import mimetypes
 import re
 from typing import Any, BinaryIO, List, Optional
 
-import mdzip
+import mdzip_core
 from markitdown import DocumentConverter, DocumentConverterResult, MarkItDown, StreamInfo
 
 ACCEPTED_EXTENSIONS = [".mdz"]
@@ -61,14 +61,14 @@ class MdzConverter(DocumentConverter):
             raise ValueError(f"mdz_documents must be one of {', '.join(DOCUMENTS_OPTIONS)}, not {documents!r}")
         keep_data_uris = bool(kwargs.get("keep_data_uris", False))
 
-        archive = mdzip.MdzArchive(file_stream.read(), path=stream_info.local_path)
+        archive = mdzip_core.MdzArchive(file_stream.read(), path=stream_info.local_path)
         entry = archive.entry_point
         if documents == "auto":
             documents = "all" if archive.mode == "project" else "entry"
 
         paths = [entry]
         if documents == "all":
-            paths += [p for p in archive.documents if p != entry and not mdzip.is_support_file(p)]
+            paths += [p for p in archive.documents if p != entry and not mdzip_core.is_support_file(p)]
 
         parts: List[str] = []
         for path in paths:
@@ -83,7 +83,7 @@ class MdzConverter(DocumentConverter):
         return DocumentConverterResult(markdown=markdown, title=archive.title or _first_heading(markdown))
 
 
-def _embed_images(archive: mdzip.MdzArchive, document: str, text: str) -> str:
+def _embed_images(archive: mdzip_core.MdzArchive, document: str, text: str) -> str:
     """Replace archive image paths in ``text`` with data: URIs."""
 
     def replace(match: "re.Match[str]") -> str:

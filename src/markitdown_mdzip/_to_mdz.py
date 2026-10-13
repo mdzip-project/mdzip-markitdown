@@ -10,7 +10,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, BinaryIO, Dict, List, Optional, Union
 
-import mdzip
+import mdzip_core
 from markitdown import MarkItDown, StreamInfo
 
 from ._converter import _first_heading
@@ -94,7 +94,7 @@ def convert_to_mdz(
 
     contents: Dict[str, Union[str, bytes]] = {entry: markdown}
     contents.update(files)
-    data = mdzip.create(contents, title=doc_title, entry_point=entry)
+    data = mdzip_core.create(contents, title=doc_title, entry_point=entry)
     return MdzConversion(data=data, markdown=markdown, entry_point=entry, title=doc_title, images=list(files))
 
 
@@ -104,10 +104,10 @@ def _entry_name(stem: str) -> str:
     if not stem.strip() or "/" in candidate:
         return "index.md"
     try:
-        mdzip.validate_path(candidate)
-    except mdzip.MdzError:
+        mdzip_core.validate_path(candidate)
+    except mdzip_core.MdzError:
         return "index.md"
-    if mdzip.is_support_file(candidate):
+    if mdzip_core.is_support_file(candidate):
         # A support-file name (README.md, ...) would read as package documentation.
         return "index.md"
     return candidate
