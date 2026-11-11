@@ -230,5 +230,7 @@ For each failed check, note:
 - your operating system and Python version (`python --version`)
 - the file you used, if you can share it
 
-File it as an issue at
-<https://github.com/mdzip-project/mdzip-markitdown/issues>.
+Post your results in
+[Test reports](https://github.com/orgs/mdzip-project/discussions/categories/test-reports)
+(a free GitHub account is needed). A report where everything passed is useful
+too.
