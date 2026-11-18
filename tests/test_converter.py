@@ -71,7 +71,12 @@ class DocumentModeTests(unittest.TestCase):
 
     def test_without_plugins_markitdown_dumps_every_file(self):
         # The behavior this plugin replaces: the generic ZIP converter, manifest and all.
-        result = MarkItDown().convert_stream(io.BytesIO(self.data), stream_info=StreamInfo(extension=".mdz"))
+        # The mimetype is given because whether MarkItDown guesses ZIP for ".mdz"
+        # depends on the system's MIME database: on GitHub's Linux runners it
+        # doesn't, and no converter is tried at all.
+        result = MarkItDown().convert_stream(
+            io.BytesIO(self.data), stream_info=StreamInfo(extension=".mdz", mimetype="application/zip")
+        )
         self.assertIn("## File: manifest.json", result.markdown)
         self.assertNotIn("## File: manifest.json", convert(self.data).markdown)
 
