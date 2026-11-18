@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "markitdown-mdzip"
-description = "MarkItDown plugin that converts MDZip (.mdz) archives to Markdown."
+description = "MarkItDown plugin for MDZip (.mdz): convert .mdz archives to Markdown, and Word, PowerPoint, HTML and more to .mdz with the images kept."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
