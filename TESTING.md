@@ -37,10 +37,10 @@ You need Python 3.10 or newer. To check your version, run `python --version`
    | Windows (Command Prompt) | `.venv\Scripts\activate.bat` |
    | macOS / Linux | `source .venv/bin/activate` |
 
-4. Install the package from GitHub (it isn't on PyPI yet):
+4. Install the package from PyPI:
 
    ```sh
-   pip install "markitdown-mdzip[docx,pptx] @ git+https://github.com/mdzip-project/mdzip-markitdown"
+   pip install "markitdown-mdzip[docx,pptx]"
    ```
 
 5. Download the two sample files into your folder:
