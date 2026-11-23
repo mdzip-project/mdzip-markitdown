@@ -92,10 +92,11 @@ print(result.entry_point, result.title, result.images)
 How it works:
 - MarkItDown runs with `keep_data_uris=True`, so each image arrives embedded in the Markdown.
 - The tool decodes each embedded image into `images/image-001.png`, `image-002.jpg`, and so on, and points the Markdown at that file. An image used twice is stored once.
+- **EPUB books** are different: MarkItDown leaves each picture as a link to the file inside the EPUB (`../images/logo.png`). The tool finds that file in the EPUB and stores it under `images/` with its own name (`images/logo.png`). A link to a file the EPUB doesn't have stays as it was. The book's cover, which MarkItDown leaves out because no chapter shows it, is packaged too: it becomes the archive's cover and is shown at the top of the document.
 - **The document** is named after the source file (`Launch Notes.md`). The name falls back to `index.md` when it can't be used as an archive path, or when it would be mistaken for a support file such as `README.md`.
 - **The title** is the one MarkItDown reports. If there isn't one, it's the document's first `#` heading, then the file name.
 
-It works for any format MarkItDown reads. Images come through for any format whose MarkItDown converter embeds them, which includes Word (`.docx`), PowerPoint (`.pptx`), and HTML pages with embedded images. MarkItDown's PDF converter extracts text only, so a PDF gives an `.mdz` without images.
+It works for any format MarkItDown reads. Images come through for any format whose MarkItDown converter embeds them, which includes Word (`.docx`), PowerPoint (`.pptx`), and HTML pages with embedded images, and for EPUB books. MarkItDown's PDF converter extracts text only, so a PDF gives an `.mdz` without images.
 
 | Option | CLI | Python |
 |---|---|---|
@@ -105,6 +106,14 @@ It works for any format MarkItDown reads. Images come through for any format who
 | Image folder | — | `images_dir=` (default `images`) |
 | MarkItDown plugins | `-p` / `--use-plugins` | pass your own `markitdown=MarkItDown(...)` |
 | Overwrite | `-f` / `--force` | — |
+
+Word, PowerPoint, Excel and PDF need MarkItDown's readers for them, which plain `pip install markitdown-mdzip` leaves out. `markitdown-mdz --version` names any that are missing:
+
+```text
+markitdown-mdz 0.1.1
+MarkItDown 0.1.9
+Missing readers: docx, pptx, xlsx, xls (pip install "markitdown-mdzip[all]" adds them)
+```
 
 ## Development
 

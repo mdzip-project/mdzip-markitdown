@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1] - 2026-11-23
+
+- `markitdown-mdz` keeps an EPUB's pictures. MarkItDown's EPUB converter leaves each `<img>` as a link to the file inside the EPUB, relative to its chapter (`../images/logo.png`), so the `.mdz` had broken image links and no pictures. They're now found in the EPUB and stored under `images/` with their own names, each once; a link to a file the EPUB doesn't have stays as it was.
+- An EPUB's cover is kept. It's named only in the book's package file, not in any chapter, so MarkItDown leaves it out. It's now stored under `images/`, set as the archive's `cover`, and shown at the top of the document unless a chapter already shows it.
+- `markitdown-mdz --version` also gives MarkItDown's version and, when MarkItDown was installed without some of its readers, names the kinds of file it can't read: `Missing readers: docx, pptx (pip install "markitdown-mdzip[all]" adds them)`. MDZip Studio's System Integration shows it.
+- A picture whose name has a space or parenthesis is linked in `<angle brackets>`, so the link works.
+
 ## [0.1.0] - 2026-11-18
 
 First release.
