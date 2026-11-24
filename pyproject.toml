@@ -8,7 +8,11 @@ description = "MarkItDown plugin for MDZip (.mdz): convert .mdz archives to Mark
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
-requires-python = ">=3.10"
+# MarkItDown's range (0.1.8 on). Without the cap, pip on 3.15 falls back to an
+# older MarkItDown whose onnxruntime pin has no 3.15 build, and reports a
+# dependency conflict instead of "requires a different Python". Raise it
+# when MarkItDown does.
+requires-python = ">=3.10,<3.15"
 dependencies = ["markitdown>=0.1.0", "mdzip-core>=0.1.0"]
 dynamic = ["version"]
 keywords = ["markitdown", "markitdown-plugin", "mdzip", "mdz", "markdown"]

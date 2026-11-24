@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.2] - 2026-11-24
+
+- Needs Python 3.10 to 3.14, as MarkItDown does. On Python 3.15, pip now says markitdown-mdzip needs a different Python, instead of reporting a dependency conflict over `onnxruntime`.
+
 ## [0.1.1] - 2026-11-23
 
 - `markitdown-mdz` keeps an EPUB's pictures. MarkItDown's EPUB converter leaves each `<img>` as a link to the file inside the EPUB, relative to its chapter (`../images/logo.png`), so the `.mdz` had broken image links and no pictures. They're now found in the EPUB and stored under `images/` with their own names, each once; a link to a file the EPUB doesn't have stays as it was.

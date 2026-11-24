@@ -19,7 +19,7 @@ happened (see [Reporting problems](#reporting-problems)).
 
 ## Setup
 
-You need Python 3.10 or newer. To check your version, run `python --version`
+You need Python 3.10 to 3.14, the versions MarkItDown supports. To check your version, run `python --version`
 (on macOS or Linux, use `python3`).
 
 1. Make an empty folder to work in, and open a terminal there.
